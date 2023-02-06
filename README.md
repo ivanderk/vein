@@ -1,6 +1,7 @@
 # Vein
 
-Vein is a Python web app (built on Flask) for measuring the mood of a team (or any other group of people for that matter).
+Vein is a Python web app (built on [Flask](https://flask.palletsprojects.com/)) for measuring the mood of a team (or any other group of people for that matter). 
+Vein serves as a simple demo and playground for [Flask](https://flask.palletsprojects.com/), [Htmx](https://htmx.org/) and [Tailwind CSS](https://tailwindcss.com/).
 
 ## Installation
 
@@ -11,10 +12,15 @@ poetry install
 ```
 
 ## Usage
-Run the webserver with
+[Activate the Python virtual environment](https://python-poetry.org/docs/basic-usage/#activating-the-virtual-environment) with
 
 ```bash
-python --app vein run
+poetry shell
+```
+Run the Flask webserver with
+
+```bash
+flask --app vein run
 ```
 
 It will run by default on port 8080.
