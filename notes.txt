@@ -2,6 +2,8 @@
 https://tailwindcss.com/
 https://daisyui.com/
 https://tailwind-elements.com/
+https://flask.palletsprojects.com/
+
 
 1. Currently I feel like...
 
