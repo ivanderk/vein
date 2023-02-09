@@ -34,12 +34,12 @@ def create_app(test_config=None):
         "I feel inspired and excited to work in this team for the coming sprints..."
     ]
 
-    @app.route("/")
+    @app.get("/")
     def home():
         return render_template('index.html', questions=questions)
 
     # a simple page that says hello
-    @app.route('/hello')
+    @app.get('/hello')
     def hello():
         return 'Hello, World!'
 
