@@ -1,20 +1,8 @@
-<!doctype html>
-<html data-theme="aqua">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vein</title>
-    <script src="https://unpkg.com/htmx.org@1.8.5"
-            integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w"
-            crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css" rel="stylesheet" type="text/css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
- <div class="navbar bg-base-100">
-        <a class="btn btn-ghost normal-case text-xl">Vein - give your opinion</a>
- </div>
-<div class="relative flex flex-wrap overflow-hidden py-6 sm:py-12">
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="relative flex flex-wrap overflow-hidden py-6 ">
 
     <div class="card w-96 bg-base-100 shadow-xl m-2">
         <div class="card-body">
@@ -45,10 +33,6 @@
         </div>
     </div>
     {% endfor %}
+</div>
 
-</div>
-<div class="card-actions">
-    <button class="btn btn-primary">Save</button>
-</div>
-</body>
-</html>
+{% endblock %}
