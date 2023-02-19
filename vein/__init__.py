@@ -38,6 +38,10 @@ def create_app(test_config=None):
     def home():
         return render_template('index.html', questions=questions)
 
+    @app.get("/login")
+    def login():
+        return render_template('login.html', questions=questions)
+
     # a simple page that says hello
     @app.get('/hello')
     def hello():
