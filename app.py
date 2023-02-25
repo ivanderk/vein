@@ -17,8 +17,8 @@ db.create_all()
 
 @app.route('/')
 def index():
-    return redirect(url_for('vein.index'))
-    #return render_template('index.html')
+    #return redirect(url_for('vein.index'))
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

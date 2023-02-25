@@ -1,0 +1,31 @@
+
+{% extends '/base.html' %}
+
+
+{% block content %}
+
+<div class="hero min-h-screen bg-base-200">
+    <div class="hero-content flex-col lg:flex-row">
+      <img src="{{ url_for('static', filename='vein-janus-face.png') }}" class="max-w-sm rounded-lg shadow-2xl" />
+      <div>
+        <h1 class="text-5xl font-bold">Tell what you feel and think</h1>
+        <p class="py-6">With the code given to you, you can enter the application anonymously (the code is not tracable to you) 
+            and share what you feel and think about the project. We would like to know how things are going as the Team really knows 
+            best. But people don't always feel free to share their true opinions. With this application you can. Click on the
+            link below to see all stats from all the apps in the system.
+        </p>
+        <input type="text" placeholder="Enter the code here" class="input input-bordered input-info w-full max-w-xs" />
+        <button class="btn btn-primary">Get Started</button>
+      </div>
+    </div>
+   
+    <div class="hidden lg:block fixed bottom-0 w-full">
+        {%  include 'footer.html' %}
+    </div>
+  
+</div>
+<div class="block lg:hidden">
+{%  include 'footer.html' %}
+</div>
+
+{% endblock %}

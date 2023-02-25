@@ -12,16 +12,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
- <div class="navbar bg-base-100">
-        <img src="{{ url_for('static', filename='vein-janus-face.png') }}"
-        <a class="btn btn-ghost normal-case text-xl">Vein - give your opinion</a>
- </div>
 
 
  {% block content %}{% endblock %}
 
-<div class="card-actions">
-    <button class="btn btn-primary">Save</button>
-</div>
+
 </body>
 </html>
