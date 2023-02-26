@@ -20,7 +20,13 @@ poetry shell
 Run the Flask webserver with
 
 ```bash
-flask --app vein run
+flask run
+```
+
+or in debug-mode with:
+
+```bash
+flask --debug run
 ```
 
 It will run by default on port 8080.
