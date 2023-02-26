@@ -25,3 +25,6 @@ def find_user_by_user_name(user_name):
     "Searched for User from db by name. Needs not to exist"
     return db.session.execute(db.select(User).filter_by(login=user_name)).scalar_one_or_none()
  
+def get_pending_surveys(user_name):
+    
+    pass

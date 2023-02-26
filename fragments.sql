@@ -3,9 +3,11 @@ INSERT INTO "user" (id, login, name, email, password_hash, password_salt)
 VALUES (1, 'john', 'John Singleton','jsingleton@justacorp.com','$2b$12$gIcSbXQrWqMHTFhbcNOguOQhSNDDq.nQpuX25Fgfy4HKrrIScnaWm', '$2b$12$gIcSbXQrWqMHTFhbcNOguO'),
        (2, 'jane', 'Jane Mutiplex','jmutiplex2@justacorp.com','$2b$12$NRjQ1na2/7ikf2SFhgqNrOE8cUQOI.JiFWy8WUQepghNZEPmbAT/m', '$2b$12$NRjQ1na2/7ikf2SFhgqNrO');
 
--- -- id	name	password_hash	                                                password_salt
--- -- 1	john	$2b$12$gIcSbXQrWqMHTFhbcNOguOQhSNDDq.nQpuX25Fgfy4HKrrIScnaWm	$2b$12$gIcSbXQrWqMHTFhbcNOguO
--- -- 2	jane	$2b$12$NRjQ1na2/7ikf2SFhgqNrOE8cUQOI.JiFWy8WUQepghNZEPmbAT/m	$2b$12$NRjQ1na2/7ikf2SFhgqNrO
+-- Insert sample Projects. 
+INSERT INTO "project" (id, name)
+VALUES (1, 'Presales team'),
+       (2, 'CoE Cloud Google'),
+       (3, 'Project Crew Verve');
 
 
 -- -- Insert sample projects

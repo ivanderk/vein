@@ -1,0 +1,49 @@
+{% extends '/base.html' %}
+
+{% block content %}
+
+<div class="navbar bg-base-100">
+    <img class="w-10 h-10" src="{{ url_for('static', filename='vein-janus-face.png') }}">
+    <span class="normal-case text-xl"><span class="veintitle font-bold text-3xl">vein</span>: tell what you feel and think (about {{current_project}})</span>
+</div>
+
+<div class="relative flex flex-wrap overflow-hidden py-6 ">
+
+    <div class="card w-96 bg-base-100 shadow-xl m-2">
+        <div class="card-body">
+
+            <span class="text-lg">How do you feel about your current project? </span>
+            <input name="rating-base" type="range" min="0" max="100" value="25" class="range" step="25"/>
+            <div class="w-full flex justify-between px-2 text-3xl">
+                <span>😭</span>
+                <span>🙁</span>
+                <span>😐</span>
+                <span>😊</span>
+                <span>😃</span>
+            </div>
+        </div>
+    </div>
+
+    {% for questions in questions %}
+    <div class="card w-96 bg-base-100 shadow-xl m-2">
+        <div class="card-body">
+            <span class="text-lg">{{questions}}</span>
+            <div class="rating rating-lg">
+                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500"/>
+                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500" checked/>
+                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500"/>
+                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500"/>
+                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500"/>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="card-actions">
+    <button class="btn btn-primary">Save</button>
+</div>
+
+{%  include 'footer.html' %}
+
+{% endblock %}

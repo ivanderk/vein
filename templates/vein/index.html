@@ -1,49 +1,44 @@
+
 {% extends '/base.html' %}
+
 
 {% block content %}
 
-<div class="navbar bg-base-100">
-    <img class="w-10 h-10" src="{{ url_for('static', filename='vein-janus-face.png') }}">
-    <span class="normal-case text-xl"><span class="veintitle font-bold text-3xl">vein</span>: tell what you feel and think (about {{current_project}})</span>
-</div>
-
-<div class="relative flex flex-wrap overflow-hidden py-6 ">
-
-    <div class="card w-96 bg-base-100 shadow-xl m-2">
-        <div class="card-body">
-
-            <span class="text-lg">How do you feel about your current project? </span>
-            <input name="rating-base" type="range" min="0" max="100" value="25" class="range" step="25"/>
-            <div class="w-full flex justify-between px-2 text-3xl">
-                <span>😭</span>
-                <span>🙁</span>
-                <span>😐</span>
-                <span>😊</span>
-                <span>😃</span>
-            </div>
-        </div>
+<div class="hero min-h-screen bg-base-200">
+    <div class="hero-content flex-col lg:flex-row">
+      <img src="{{ url_for('static', filename='vein-janus-face.png') }}" class="max-w-sm rounded-lg shadow-2xl" />
+      <div>
+        <h1 class="text-5xl font-bold"><span class="veintitle">vein</span>: tell what you feel and think</h1>
+        <p class="py-6">With the code given to you, you can enter the application anonymously (the code is not tracable to you) 
+            and share what you feel and think about your current project(s). We would like to know how things are going as the Team really knows 
+            best. But people don't always feel free to share their true opinions. With this application you can. Click on the
+            link below to see all stats from all the apps in the system.
+        </p>
+        <!--input type="text" placeholder="Enter the code here" class="input input-bordered input-info w-full max-w-xs" / -->
+        
+        <form action="{{ url_for('index') }}" method="POST">
+        <div class="form-control">
+          <label class="input-group">
+            <span>Pending surveys</span>
+            <select class="select select-primary w-full max-w-xs">
+              <option selected>Presales - 28/02/2023</option>
+              <option>CoE Cloud Google - 05/03/2023</option>
+              <option>Project Crew Verve - 28/02/2023</option>
+            </select>
+            <button class="btn btn-primary">Goto survey</button>
+          </label>
+        </div> 
+        </form>  
+      </div>
     </div>
-
-    {% for questions in questions %}
-    <div class="card w-96 bg-base-100 shadow-xl m-2">
-        <div class="card-body">
-            <span class="text-lg">{{questions}}</span>
-            <div class="rating rating-lg">
-                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500"/>
-                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500" checked/>
-                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500"/>
-                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500"/>
-                <input type="radio" name="rating-{{loop.index0}}" class="mask mask-star-2 bg-green-500"/>
-            </div>
-        </div>
+   
+    <div class="hidden lg:block fixed bottom-0 w-full">
+        {%  include 'footer.html' %}
     </div>
-    {% endfor %}
+  
 </div>
-
-<div class="card-actions">
-    <button class="btn btn-primary">Save</button>
-</div>
-
+<div class="block lg:hidden">
 {%  include 'footer.html' %}
+</div>
 
 {% endblock %}
