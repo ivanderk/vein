@@ -44,7 +44,7 @@ def login():
             error = 'Invalid username or password'
         else:
             #Note: Flask session. NOT SqlAlchemy...
-            session['user_name'] = user.name
+            session['user_name'] = user.login
             return redirect(url_for('vein.index'))
 
     return render_template('login.html', error=error)

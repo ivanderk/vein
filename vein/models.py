@@ -41,16 +41,23 @@ class Project(db.Model):
     surveys = db.relationship('Survey', backref='project')
     users = db.relationship('User', secondary='user_project', back_populates='projects')
     
-
 class Survey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
+    title = db.Column(db.String(50), nullable=False)
+    closed = db.Column(db.Boolean, nullable=False, default=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
-    respondents = db.relationship('Respondent', backref='survey')
- 
-
-class Respondent(db.Model):
+    answers = db.relationship('Answer', backref='survey')
+    tickets = db.relationship('Ticket', backref='survey')
+    
+class Ticket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    completed = db.Column(db.Boolean, nullable=False, default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    survey_id = db.Column(db.Integer, db.ForeignKey('survey.id'), nullable=False)
+
+class Answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.String(50), nullable=False)
     survey_id = db.Column(db.Integer, db.ForeignKey('survey.id'), nullable=False)
 
 user_project = db.Table('user_project',

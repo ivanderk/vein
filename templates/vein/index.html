@@ -20,10 +20,11 @@
         <div class="form-control">
           <label class="input-group">
             <span>Pending surveys</span>
-            <select class="select select-primary w-full max-w-xs">
-              <option selected>Presales - 28/02/2023</option>
-              <option>CoE Cloud Google - 05/03/2023</option>
-              <option>Project Crew Verve - 28/02/2023</option>
+            <select name="survey_id" class="select select-primary w-full max-w-xs">
+              
+              {% for survey in pending_surveys %}
+                  <option value="{{survey.id}}">{{survey.title}}</option>
+              {% endfor %}
             </select>
             <button class="btn btn-primary">Goto survey</button>
           </label>
