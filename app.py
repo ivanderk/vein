@@ -4,7 +4,8 @@ from vein.data import find_user_by_user_name
 from vein.middleware import authenticate_handler
 from vein.views import vein_bp
 from vein.models import init_app 
-from veinadmin.views import veinadmin_bp
+#from veinadmin.views import veinadmin_bp
+from veinadmin.views import init_admin
 
 app = Flask(__name__)
 
@@ -15,11 +16,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vein.db'
 #app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 db = init_app(app)
 app.register_blueprint(vein_bp)
-app.register_blueprint(veinadmin_bp)
+#app.register_blueprint(veinadmin_bp)
+init_admin(app, db)
 
 app.app_context().push()
 db.create_all()
-
 
 @app.before_request
 def before_request():
@@ -59,7 +60,12 @@ def logout():
 @app.route('/')
 def index():
     return redirect(url_for('vein.index'))
-  
+
+@app.route('/admin', methods=['GET'])
+def admin():
+   
+    return redirect("/admin/")
+
 @app.route('/page-not-found')
 def page_not_found():
     return render_template('404.html')
