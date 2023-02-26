@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
-from vein.data import find_user_by_user_name, get_pending_surveys
+from vein.data import find_user_by_user_name
 from vein.middleware import authenticate_handler
 from vein.views import vein_bp
 from vein.models import init_app 
@@ -44,7 +44,7 @@ def login():
             error = 'Invalid username or password'
         else:
             #Note: Flask session. NOT SqlAlchemy...
-            session['user_name'] = user.login
+            session['CURRENT_USER'] = (user.id, user.login)
             return redirect(url_for('vein.index'))
 
     return render_template('login.html', error=error)
@@ -53,7 +53,7 @@ def login():
 def logout():
    
     #Note: Flask session. NOT SqlAlchemy...
-    del session['user_name'] 
+    del session['CURRENT_USER'] 
     return redirect(url_for('login'))
 
 @app.route('/')

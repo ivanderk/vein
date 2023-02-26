@@ -1,5 +1,5 @@
 
-from .models import Project, Survey, Ticket, db, User
+from .models import Answer, Project, Survey, Ticket, db, User
 
 
 questions = [
@@ -35,5 +35,29 @@ def get_pending_surveys(user_name):
                               .where((Survey.closed == False) & (Ticket.completed == False) & (Ticket.user_id == user.id))).scalars()
 
 
-def get_survey_from_id(id):
-    return db.session.execute(db.select(Survey).filter_by(id=id)).scalar_one_or_none()
+def get_ticket_by_id(id):
+    return db.session.execute(db.select(Ticket).filter_by(id=id)).scalar_one()
+
+def get_survey_by_id(id):
+    return db.session.execute(db.select(Survey).filter_by(id=id)).scalar_one()
+
+def save_survey_answer_by_id(survey_id, user_id, answer):
+    
+    survey = get_survey_by_id(survey_id)
+    ticket = next(ticket for ticket in survey.tickets if ticket.id==user_id)
+    ticket.completed = True
+    
+    answer = Answer(data=answer, survey_id=survey_id)
+    db.session.add(answer)
+    db.session.commit()
+    
+
+def extract_answer(form):
+    answer_lst = ['0' for e in range(0,9)]
+    answer_lst[8] = form.get('rating-base')
+    for i in range(0,8):
+        answer_lst[i] = form.get(f'rating-{i}')
+    
+    print(answer_lst)
+    return '-'.join(answer_lst) 
+    

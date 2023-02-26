@@ -9,14 +9,15 @@
       <img src="{{ url_for('static', filename='vein-janus-face.png') }}" class="max-w-sm rounded-lg shadow-2xl" />
       <div>
         <h1 class="text-5xl font-bold"><span class="veintitle">vein</span>: tell what you feel and think</h1>
-        <p class="py-6">With the code given to you, you can enter the application anonymously (the code is not tracable to you) 
-            and share what you feel and think about your current project(s). We would like to know how things are going as the Team really knows 
-            best. But people don't always feel free to share their true opinions. With this application you can. Click on the
-            link below to see all stats from all the apps in the system.
+        <p class="py-6">We invite you toshare what you feel and think about your current project(s). We would like to know 
+          how things are going, as the Team really knows best. But people don't always feel free to share their true opinions. 
+          With this application you can provide us with your feedback anonymously as the data you provide is not tracable to 
+          you <sup>*)</sup>. Select a pending Survey from the select box down. Click on menuy "Results" to see the stats related
+          with your projects. 
         </p>
-        <!--input type="text" placeholder="Enter the code here" class="input input-bordered input-info w-full max-w-xs" / -->
-        
-        <form action="{{ url_for('index') }}" method="POST">
+        <p class="py-2"><sup>*)</sup> The application keeps track whether you have completed a survey but does not present that information
+          to the PM. And your answers are stored without any possible association to you.</p>
+        <form action="{{ url_for('vein.survey') }}" method="POST">
         <div class="form-control">
           <label class="input-group">
             <span>Pending surveys</span>
