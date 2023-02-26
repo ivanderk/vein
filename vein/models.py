@@ -9,7 +9,6 @@ def init_app(app):
     
     
 class User(db.Model):
-    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     login= db.Column(db.String(64), nullable=False)
     name = db.Column(db.String(120), nullable=False)
@@ -37,34 +36,24 @@ class User(db.Model):
         return password_hash == self.password_hash.encode('utf-8')
 
 class Project(db.Model):
-    __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    users = db.relationship('User', secondary='user_project', backref='projects')
     surveys = db.relationship('Survey', backref='project')
-
-user_project = db.Table('user_project',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('project_id', db.Integer, db.ForeignKey('projects.id'), primary_key=True)
-)
+    users = db.relationship('User', secondary='user_project', back_populates='projects')
+    
 
 class Survey(db.Model):
-    __tablename__ = 'surveys'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
-    project = db.relationship('Project', backref='surveys')
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     respondents = db.relationship('Respondent', backref='survey')
-    tickets = db.relationship('Ticket', backref='survey')
+ 
 
 class Respondent(db.Model):
-    __tablename__ = 'respondents'
     id = db.Column(db.Integer, primary_key=True)
-    survey_id = db.Column(db.Integer, db.ForeignKey('surveys.id'), nullable=False)
+    survey_id = db.Column(db.Integer, db.ForeignKey('survey.id'), nullable=False)
 
-class Ticket(db.Model):
-    __tablename__ = 'tickets'
-    id = db.Column(db.Integer, primary_key=True)
-    number = db.Column(db.String(50), nullable=False)
-    completed = db.Column(db.Boolean, nullable=False)
-    survey_id = db.Column(db.Integer, db.ForeignKey('surveys.id'), nullable=False)
+user_project = db.Table('user_project',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True)
+)

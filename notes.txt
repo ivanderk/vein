@@ -5,6 +5,9 @@ https://tailwind-elements.com/
 https://flask.palletsprojects.com/
 
 
+https://testdriven.io/blog/flask-htmx-tailwind/
+
+
 1. Currently I feel like...
 
 2. My enthusiasm regarding the work I do...
