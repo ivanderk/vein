@@ -45,6 +45,12 @@ class Survey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     closed = db.Column(db.Boolean, nullable=False, default=False)
+    # stats segement
+    rating = db.Column(db.String(120), nullable=False)
+    mood =  db.Column(db.Integer, default=0)
+    completed = db.Column(db.Integer, default=0)
+    label = db.Column(db.String(120), default="")
+    # relationships
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     answers = db.relationship('Answer', backref='survey')
     tickets = db.relationship('Ticket', backref='survey')
