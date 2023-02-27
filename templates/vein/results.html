@@ -4,24 +4,40 @@
 
 {% block content %}
 
-<div class="hero min-h-screen bg-base-200">
-    <div class="hero-content flex-col lg:flex-row">
-      <img src="{{ url_for('static', filename='work.png') }}" class="max-w-sm rounded-lg shadow-2xl" />
-      <div>
-        <h1 class="text-5xl font-bold">Still busy working on <span class="veintitle">vein</span></h1>
-        <p class="py-6">This will be the part where the results of the surveys are being shown
-        </p>  
-        
-      </div>
-    </div>
+<div class="flex items-center justify-center h-screen bg-base-200">
+  <div class=" rounded-lg shadow-lg p-8">
    
-    <div class="hidden lg:block fixed bottom-0 w-full">
-        {%  include 'footer.html' %}
+
+    <div class="stats shadow">
+      
+      <div class="stat place-items-center">
+        <div class="stat-title">Downloads</div>
+        <div class="stat-value">31K</div>
+        <div class="stat-desc">From January 1st to February 1st</div>
+      </div>
+      
+      <div class="stat place-items-center">
+        <div class="stat-title">Mood</div>
+        <img class="w-16 h-16" src="{{ url_for('static', filename='emojis/happy.svg') }}">
+      </div>
+      
+      <div class="stat place-items-center">
+        <div class="stat-title">Survey completed</div>
+        <div class="radial-progress text-primary" style="--value:70;">70%</div>
+       
+      </div>
+      
     </div>
-  
+
+  </div>
+  <div class="hidden lg:block fixed bottom-0 w-full">
+    {%  include 'footer.html' %}
 </div>
+</div>
+
+
 <div class="block lg:hidden">
-{%  include 'footer.html' %}
-</div>
+  {%  include 'footer.html' %}
+  </div>
 
 {% endblock %}
