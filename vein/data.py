@@ -17,6 +17,10 @@ questions = [
 # https://docs.sqlalchemy.org/en/20/orm/queryguide/index.html
 
 
+def get_user_by_id(id):
+    "Searched for User from db by id. Must exist or generates exception"
+    return db.session.execute(db.select(User).filter_by(id=id)).scalar_one()
+
 def get_user_by_user_name(user_name):
     "Searched for User from db by name. Must exist or generates exception"
     return db.session.execute(db.select(User).filter_by(login=user_name)).scalar_one()
