@@ -25,9 +25,10 @@ db.create_all()
 def before_request():
     return authenticate_handler(None)
 
-@app.after_request
-def after_request(response):
-    return authenticate_handler(response)
+#@app.after_request
+#def after_request(response):
+#    return authenticate_handler(response)
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -44,9 +45,14 @@ def login():
             error = 'Invalid username or password'
         else:
             #Note: Flask session. NOT SqlAlchemy...
-            session['CURRENT_USER'] = (user.id, user.login)
-            return redirect(url_for('vein.index'))
-
+            
+            if user.projects == None or len(user.projects) == 0:
+                
+                return render_template('error.html', error_message="No projects asigned", error_description="You have not been asigned any projects. Please contact your Project Manager")
+            else:
+                session['CURRENT_USER'] = (user.id, user.login)
+                return redirect(url_for('vein.index'))
+    
     return render_template('login.html', error=error)
 
 @app.route('/logout', methods=['GET'])
@@ -62,7 +68,7 @@ def index():
   
 @app.route('/page-not-found')
 def page_not_found():
-    return render_template('404.html')
+    return render_template('error.html', error_message="Page not found", error_description="This isn't the page you are looking for....")
   
 
 if __name__ == '__main__':
