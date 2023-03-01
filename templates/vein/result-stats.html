@@ -6,24 +6,24 @@
       <div class="stat-title">Rating</div>
       <div class="stat-value">
         <div class="rating">
-          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.rating == 1 }}/>
-          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.rating == 2 }} />
-          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.rating == 3 }}/> 
-          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.rating == 4 }} />
-          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.rating == 5 }}/>
+          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.survey.rating == 1 }}/>
+          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.survey.rating == 2 }} />
+          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.survey.rating == 3 }}/> 
+          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.survey.rating == 4 }} />
+          <input type="radio" name="rating-5" class="mask mask-star-2 bg-blue-400" disabled {{ 'checked' if stats.survey.rating == 5 }}/>
         </div>
       </div>
-      <div class="stat-desc">{{stats.label}}</div>
+      <div class="stat-desc">{{stats.survey.title}}</div>
     </div>
     
     <div class="stat place-items-center">
       <div class="stat-title">Mood</div>
-      <img class="w-32 h-32" src="{{ url_for('static', filename='emojis/mood-' + stats.mood | string + '.svg') }}">
+      <img class="w-32 h-32" src="{{ url_for('static', filename='emojis/mood-' + stats.survey.mood | string + '.svg') }}">
     </div>
     
     <div class="stat place-items-center">
       <div class="stat-title">Survey completed</div>
-      <div class="radial-progress text-primary" style="--value:{{stats.completed}};">{{stats.completed}}%</div>
+      <div class="radial-progress text-primary" style="--value:{{stats.survey.completed}};">{{stats.survey.completed}}%</div>
      
     </div>
     

@@ -1,5 +1,9 @@
+from dataclasses import dataclass
+from datetime import datetime
+from typing import List
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import DateTime
 
 db = SQLAlchemy()
 
@@ -45,11 +49,11 @@ class Survey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     closed = db.Column(db.Boolean, nullable=False, default=False)
+    created_at = db.Column(DateTime, default=datetime.utcnow)
     # stats segement
-    rating = db.Column(db.String(120), nullable=False)
+    rating = db.Column(db.String(120), default="")
     mood =  db.Column(db.Integer, default=0)
     completed = db.Column(db.Integer, default=0)
-    label = db.Column(db.String(120), default="")
     # relationships
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     answers = db.relationship('Answer', backref='survey')
@@ -70,3 +74,13 @@ user_project = db.Table('user_project',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True)
 )
+
+@dataclass
+class SurveyStat:
+    projects: List[Project]
+    project: Project
+    selected_project: int
+    
+    surveys: List[Survey]
+    survey: Survey
+    selected_survey: int

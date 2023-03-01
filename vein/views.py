@@ -1,8 +1,9 @@
 
-from dataclasses import dataclass
 import os
 from flask import Blueprint, redirect, render_template, request, session, url_for
-from .data import extract_answer, get_pending_surveys, get_survey_by_id, get_user_by_id, get_user_by_user_name, questions, save_survey_answer_by_id
+
+from vein.models import SurveyStat
+from .data import extract_answer, get_pending_surveys, get_survey_by_id, get_survey_stats, get_user_by_login, questions, save_survey_answer_by_id
 
 vein_bp = Blueprint('vein', __name__)
 
@@ -35,41 +36,28 @@ def process_answer():
     user_id, user_login = get_user()
 
     survey_id = request.form['survey_id']
-    save_survey_answer_by_id(survey_id, user_id, extract_answer(request.form))
+    save_survey_answer_by_id(survey_id, user_login, extract_answer(request.form))
 
-    return redirect(url_for('vein.index'))
+    return redirect(url_for('vein.results'))
 
 
 @vein_bp.route('/vein/results')
 def results():
     user_id, user_login = get_user()
+    
+    project_id = request.args.get('project_id', type=int)   
+    survey_id = request.args.get('survey_id', type=int)     
+    stats = get_survey_stats(user_login, project_id = project_id, survey_id=survey_id)
 
-    user = get_user_by_id(user_id)
-    stats = get_survey_stats(user.projects[0].id)
-    return render_template('vein/results.html', stats=stats, projects=user.projects)
+    return render_template('vein/results.html', stats=stats)
 
 
 @vein_bp.route('/vein/result_stats')
 def result_stats():
     user_id, user_login = get_user()
-    project_id = int(request.values.get("project_id"))
-    user = get_user_by_id(user_id)
-
-    stats = get_survey_stats(project_id)
+    
+    project_id = request.args.get('project_id', type=int)   
+    survey_id = request.args.get('survey_id', type=int) 
+    stats = get_survey_stats(user_login, project_id = project_id, survey_id=survey_id)
+    
     return render_template('vein/result-stats.html', stats=stats)
-
-
-@dataclass
-class SurveyStat:
-    rating: int
-    mood: int
-    completed: int
-    label: str
-
-
-def get_survey_stats(project_id):
-
-    if project_id == 1:
-        return SurveyStat(4, 4, 30, "From January 1st to February 1st")
-    else:
-        return SurveyStat(1, 2, 70, "back from 2022")
