@@ -77,7 +77,7 @@ def get_survey_stats(user_login, project_id=None, survey_id=None):
         selected_project, project = [(sel, proj) for (sel, proj) in enumerate(
             projects) if proj.id == survey.project.id][0]
         surveys = project.surveys
-        selected_survey, _ = [(sel, _) for (sel, surv) in enumerate(
+        selected_survey, _ = [(sel, surv) for (sel, surv) in enumerate(
             surveys) if surv.id == survey.id][0]
     else:
         projects = user.projects

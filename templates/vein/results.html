@@ -7,38 +7,17 @@
 
 <div class="flex items-center justify-center h-screen bg-base-200">
 
-  <div class="flex flex-col justify-center">
-  <div class="flex justify-center">
-  <select hx-get="{{ url_for('vein.result_stats') }}" hx-trigger="change" hx-target="#stats-container" name="project_id" class="select select-primary mb-5 w-full max-w-xs">
-              
-      {% for project in stats.projects %}
-          <option value="{{project.id}}" data-debug="{{loop.index0}}   {{stats.selected_project}}"  {{ 'selected' if loop.index0 == stats.selected_project }} >{{project.name}}</option>
-      {% endfor %}
-  </select>
-  
-  <select hx-get="{{ url_for('vein.result_stats') }}" hx-trigger="change" hx-target="#stats-container" name="survey_id" class="select select-primary mb-5 w-full max-w-xs">
-              
-    {% for survey in stats.surveys %}
-        <option value="{{survey.id}}" {{'selected' if loop.index0 == stats.selected_survey }} >{{survey.title}}</option>
-    {% endfor %}
-  </select>
-</div>
-  <div class=" rounded-lg shadow-lg p-8">
 
-    {% include 'vein/result-stats.html' %}
+  {% include '/vein/result-stats.html' %}
 
-  </div>
-
-
-  </div>
   <div class="hidden lg:block fixed bottom-0 w-full">
     {%  include 'footer.html' %}
-</div>
+  </div>
 </div>
 
 
 <div class="block lg:hidden">
   {%  include 'footer.html' %}
-  </div>
+</div>
 
 {% endblock %}
