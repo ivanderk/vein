@@ -48,10 +48,10 @@ class Project(db.Model):
 class Survey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
-    closed = db.Column(db.Boolean, nullable=False, default=False)
+    status = db.Column(db.Integer, default=-1) # -1 pending no data, 0 pending with data, 1 closed
     created_at = db.Column(DateTime, default=datetime.utcnow)
     # stats segement
-    rating = db.Column(db.String(120), default="")
+    rating = db.Column(db.Integer, default=0)
     mood =  db.Column(db.Integer, default=0)
     completed = db.Column(db.Integer, default=0)
     # relationships
@@ -84,3 +84,5 @@ class SurveyStat:
     surveys: List[Survey]
     survey: Survey
     selected_survey: int
+
+    survey_has_answers: bool

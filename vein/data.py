@@ -36,7 +36,7 @@ def get_pending_surveys(user_name):
     user = get_user_by_login(user_name)
 
     return db.session.execute(db.select(Survey).join(Survey.tickets)
-                              .where((Survey.closed == False) & (Ticket.completed == False) & (Ticket.user_id == user.id))).scalars()
+                              .where((Survey.status < 1) & (Ticket.completed == False) & (Ticket.user_id == user.id))).scalars()
 
 
 def get_ticket_by_id(id):
@@ -86,8 +86,16 @@ def get_survey_stats(user_login, project_id=None, survey_id=None):
         surveys = project.surveys
         selected_survey, survey = get_first_or_no_survey(surveys)
 
+    if survey:
+        if  survey.status > -1:
+          survey_has_answers = True 
+        else:
+            survey_has_answers = False
+    else:
+        survey_has_answers = True #not correct, but patch to hide the message box
+
     return SurveyStat(projects=projects, project=project, selected_project=selected_project,
-                      surveys=surveys, survey=survey, selected_survey=selected_survey)
+                      surveys=surveys, survey=survey, selected_survey=selected_survey, survey_has_answers=survey_has_answers)
 
 
 def get_first_or_no_survey(surveys):
