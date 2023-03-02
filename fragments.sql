@@ -19,7 +19,7 @@ VALUES (1, 1),
 
 -- create Survey for projects
 INSERT INTO survey (id, title,closed, created_at, rating, mood, completed, project_id )
-VALUES (1, "CoE Google - febrero 2023", false, '2023-02-11 13:23:44', "", 0,0,1);
+VALUES (1, "CoE Google - febrero 2023", false, '2023-02-11 13:23:44', 3, 4,50,2)
 
 -- create Ticket for survey
 INSERT into ticket (id, completed, user_id, survey_id)
