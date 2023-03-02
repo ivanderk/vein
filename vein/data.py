@@ -50,7 +50,7 @@ def get_survey_by_id(id):
 def save_survey_answer_by_id(survey_id, user_id, answer):
 
     survey = get_survey_by_id(survey_id)
-    ticket = next(ticket for ticket in survey.tickets if ticket.id == user_id)
+    ticket = next(ticket for ticket in survey.tickets if ticket.user_id == user_id)
     ticket.completed = True
 
     answer = Answer(data=answer, survey_id=survey_id)

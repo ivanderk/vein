@@ -33,12 +33,12 @@ def survey():
 
 @vein_bp.route('/vein/process_answer', methods=['POST'])
 def process_answer():
-    user_id, user_login = get_user()
+    user_id, _ = get_user()
 
     survey_id = request.form['survey_id']
-    save_survey_answer_by_id(survey_id, user_login, extract_answer(request.form))
+    save_survey_answer_by_id(survey_id, user_id, extract_answer(request.form))
 
-    return redirect(url_for('vein.results'))
+    return redirect(url_for('vein.results', survey_id = survey_id))
 
 
 @vein_bp.route('/vein/results')
