@@ -25,10 +25,6 @@ db.create_all()
 def before_request():
     return authenticate_handler(None)
 
-# @app.after_request
-# def after_request(response):
-#    return authenticate_handler(response)
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

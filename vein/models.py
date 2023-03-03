@@ -19,7 +19,7 @@ class User(db.Model):
     email = db.Column(db.String(120), nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     password_salt = db.Column(db.String(128), nullable=False)
-    projects = db.relationship('Project', secondary='user_project', back_populates='users')
+    projects = db.relationship('Project', secondary='user_project', back_populates='users', order_by='Project.name')
 
     def set_password(self, password):
         # Generate a random salt
@@ -42,7 +42,7 @@ class User(db.Model):
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    surveys = db.relationship('Survey', backref='project')
+    surveys = db.relationship('Survey', backref='project', order_by='Survey.created_at')
     users = db.relationship('User', secondary='user_project', back_populates='projects')
     
 class Survey(db.Model):

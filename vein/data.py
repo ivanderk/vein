@@ -36,7 +36,8 @@ def get_pending_surveys(user_name):
     user = get_user_by_login(user_name)
 
     return db.session.execute(db.select(Survey).join(Survey.tickets)
-                              .where((Survey.status < 1) & (Ticket.completed == False) & (Ticket.user_id == user.id))).scalars()
+                              .where((Survey.status < 1) & (Ticket.completed == False) & (Ticket.user_id == user.id))
+                              .order_by(Survey.created_at, Survey.title)).scalars()
 
 
 def get_ticket_by_id(id):
@@ -50,11 +51,31 @@ def get_survey_by_id(id):
 def save_survey_answer_by_id(survey_id, user_id, answer):
 
     survey = get_survey_by_id(survey_id)
-    ticket = next(ticket for ticket in survey.tickets if ticket.user_id == user_id)
+    ticket = next(
+        ticket for ticket in survey.tickets if ticket.user_id == user_id)
     ticket.completed = True
 
     answer = Answer(data=answer, survey_id=survey_id)
     db.session.add(answer)
+    db.session.commit()
+
+
+def update_survey_stats(survey_id):
+    survey = get_survey_by_id(survey_id)
+
+    answer_data = []
+    for answer in survey.answers:
+        answer_data.append([int(e) for e in answer.data.split('-')])
+
+    ratings, moods = zip(*[(sum(a[:8])/8, a[8]) for a in answer_data])
+    rating = round(sum(ratings)/len(ratings))
+    mood = round(sum(moods)/len(moods))
+    survey.rating = rating
+    survey.mood = mood
+    survey.completed = round((len(survey.answers) / len(survey.tickets)) * 100)
+    if survey.status == -1:
+        survey.status = 0
+
     db.session.commit()
 
 
@@ -87,12 +108,12 @@ def get_survey_stats(user_login, project_id=None, survey_id=None):
         selected_survey, survey = get_first_or_no_survey(surveys)
 
     if survey:
-        if  survey.status > -1:
-          survey_has_answers = True 
+        if survey.status > -1:
+            survey_has_answers = True
         else:
             survey_has_answers = False
     else:
-        survey_has_answers = True #not correct, but patch to hide the message box
+        survey_has_answers = True  # not correct, but patch to hide the message box
 
     return SurveyStat(projects=projects, project=project, selected_project=selected_project,
                       surveys=surveys, survey=survey, selected_survey=selected_survey, survey_has_answers=survey_has_answers)
@@ -108,11 +129,23 @@ def get_first_or_no_survey(surveys):
     return (selected_survey, survey)
 
 
+def map_mood_to_rating(mood):
+    if mood == '0':
+        return 1
+    elif mood == '25':
+        return 2
+    elif mood == '50':
+        return 3
+    elif mood == '75':
+        return 4
+    else:
+        return 5  # 100
+
+
 def extract_answer(form):
     answer_lst = ['0' for e in range(0, 9)]
-    answer_lst[8] = form.get('rating-base')
+    answer_lst[8] = map_mood_to_rating(form.get('mood'))
     for i in range(0, 8):
         answer_lst[i] = form.get(f'rating-{i}')
 
-    print(answer_lst)
     return '-'.join(answer_lst)
