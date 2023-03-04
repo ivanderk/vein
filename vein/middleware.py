@@ -1,5 +1,6 @@
 from flask import request, redirect, url_for, session
 
+
 def authenticate_handler(response):
     "Middleware to enforce redirect to login if not authenticated (not the 'static' route)"
     

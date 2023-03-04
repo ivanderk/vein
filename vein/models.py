@@ -1,5 +1,9 @@
+from dataclasses import dataclass
+from datetime import datetime
+from typing import List
 import bcrypt
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import DateTime
 
 db = SQLAlchemy()
 
@@ -15,7 +19,7 @@ class User(db.Model):
     email = db.Column(db.String(120), nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     password_salt = db.Column(db.String(128), nullable=False)
-    projects = db.relationship('Project', secondary='user_project', back_populates='users')
+    projects = db.relationship('Project', secondary='user_project', back_populates='users', order_by='Project.name')
 
     def set_password(self, password):
         # Generate a random salt
@@ -38,13 +42,19 @@ class User(db.Model):
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    surveys = db.relationship('Survey', backref='project')
+    surveys = db.relationship('Survey', backref='project', order_by='Survey.created_at')
     users = db.relationship('User', secondary='user_project', back_populates='projects')
     
 class Survey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
-    closed = db.Column(db.Boolean, nullable=False, default=False)
+    status = db.Column(db.Integer, default=-1) # -1 pending no data, 0 pending with data, 1 closed
+    created_at = db.Column(DateTime, default=datetime.utcnow)
+    # stats segement
+    rating = db.Column(db.Integer, default=0)
+    mood =  db.Column(db.Integer, default=0)
+    completed = db.Column(db.Integer, default=0)
+    # relationships
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     answers = db.relationship('Answer', backref='survey')
     tickets = db.relationship('Ticket', backref='survey')
@@ -64,3 +74,15 @@ user_project = db.Table('user_project',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
     db.Column('project_id', db.Integer, db.ForeignKey('project.id'), primary_key=True)
 )
+
+@dataclass
+class SurveyStat:
+    projects: List[Project]
+    project: Project
+    selected_project: int
+    
+    surveys: List[Survey]
+    survey: Survey
+    selected_survey: int
+
+    survey_has_answers: bool

@@ -14,7 +14,7 @@
         <div class="card-body">
 
             <span class="text-lg">How do you feel about your current project? </span>
-            <input name="rating-base" type="range" min="0" max="100" value="50" class="range" step="25"/>
+            <input name="mood" type="range" min="0" max="100" value="50" class="range" step="25"/>
             <div class="w-full flex justify-between px-2 text-3xl">
                 <span>😭</span>
                 <span>🙁</span>
@@ -40,11 +40,16 @@
     </div>
     {% endfor %}
 </div>
-
 <div class="card-actions">
     <button class="btn btn-primary">Save</button>
 </div>
 </form>
-{%  include 'footer.html' %}
+<div class="hidden lg:block fixed bottom-0 w-full">
+    {%  include 'footer.html' %}
+</div>
+
+<div class="block lg:hidden">
+    {%  include 'footer.html' %}
+</div>
 
 {% endblock %}

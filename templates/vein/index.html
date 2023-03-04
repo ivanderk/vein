@@ -9,7 +9,7 @@
       <img src="{{ url_for('static', filename='vein-janus-face.png') }}" class="max-w-sm rounded-lg shadow-2xl" />
       <div>
         <h1 class="text-5xl font-bold"><span class="veintitle">vein</span>: tell what you feel and think</h1>
-        <p class="py-6">We invite you toshare what you feel and think about your current project(s). We would like to know 
+        <p class="py-6">We invite you to share what you feel and think about your current project(s). We would like to know 
           how things are going, as the Team really knows best. But people don't always feel free to share their true opinions. 
           With this application you can provide us with your feedback anonymously as the data you provide is not tracable to 
           you <sup>*)</sup>. Select a pending Survey from the select box down. Click on menuy "Results" to see the stats related
@@ -21,13 +21,13 @@
         <div class="form-control">
           <label class="input-group">
             <span>Pending surveys</span>
-            <select name="survey_id" class="select select-primary w-full max-w-xs">
+            <select name="survey_id" {{ 'disabled' if (pending_surveys | length) == 0 }} class="select select-primary w-full max-w-xs">
               
               {% for survey in pending_surveys %}
                   <option value="{{survey.id}}">{{survey.title}}</option>
               {% endfor %}
             </select>
-            <button class="btn btn-primary">Goto survey</button>
+            <button class="{{ 'btn-disabled' if (pending_surveys | length) == 0 }} btn btn-primary">Goto survey</button>
           </label>
         </div> 
         </form>  
